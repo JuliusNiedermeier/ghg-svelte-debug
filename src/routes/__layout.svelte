@@ -15,6 +15,7 @@
 		onAuthStateChanged(auth, async (user) => {
 			if (!user) return loginWithGoogle();
 
+			console.log('UID:', user.uid);
 			authContext.set(user);
 			loading = false;
 		});
