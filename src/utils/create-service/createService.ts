@@ -4,16 +4,16 @@ import type { QueryRunner } from './createQuery';
 import type { MutationRunner } from './createMutation';
 
 export const createService = <MutationRunnerMap, TransformedQueryResult>(options: {
-	query: QueryRunner;
+	query: QueryRunner<TransformedQueryResult>;
 	mutations: Record<keyof MutationRunnerMap, MutationRunner>;
 }) => {
 	const genericStore = writable<ApolloQueryResult<TransformedQueryResult> | null>(null, (set) => {
-		options.query<TransformedQueryResult>((data) => set(data));
+		options.query((data) => set(data));
 	});
 
 	return {
 		subscribe: genericStore.subscribe,
 		mutations: options.mutations,
-		refresh: (ignoreCache: boolean) => {} // tell query observable to refetch
+		// refresh: (ignoreCache: boolean) => {} // tell query observable to refetch
 	};
 };

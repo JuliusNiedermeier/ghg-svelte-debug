@@ -34,13 +34,13 @@ interface MutationVars {
 
 export const useLocationsService = (companyID: string) =>
 	createService({
-		query: createQuery<QueryResult, QueryVariables>(
+		query: createQuery<QueryResult, QueryVariables, Location[]>(
 			client,
 			{
 				query: GET_LOCATIONS,
 				variables: { companyID }
 			},
-			(result) => result
+			(result) => result.locations 
 		),
 		mutations: {
 			createLocation: createMutation<CreateLocationMutationResult, MutationVars>(client, {
